@@ -2,72 +2,38 @@ import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "./Button";
 
-export const TrackBase = styled.div`
+export const TrackStyle = styled.p`
   box-sizing: border-box;
-  width: 620px;
-  height: 100px;
+  width: 90%;
+  min-height: 100px;
   background: #FFF;
   border-radius: 5px;
   box-shadow: 0px 5px 15px 0px;
-  display: flex;
-  justify-content: center;
-  word-wrap: wrap;
-  align-items: center;
-  font-size: 24px;
-  font-family: Roboto, sans-serif;
+  padding: 5px;
+  font: 24px Roboto, sans-serif;
   text-align: center;
-  padding: 20px;
+  margin: 0;
 `
 
-const WordBase = styled.div`
-  color: ${props => props.selected ? 'pink' : 'black'};
-  display: block;
+const Word = styled.span`
+  display: inline-block;
   margin-left: 7px;
 `
 
-const Word = ({children}) => {
-    const [selected, setSelected] = useState(false)
-    return (
-        <WordBase selected={selected} onClick={() => setSelected(true)}>{children}</WordBase>
-    )
-}
-
-const TrackEdit = ({ children }) => {
-    const words = children.split(' ')
-    return (
-      <TrackBase>
-          {words.map(word => {
-            return <Word>{word}</Word>
-          })}
-      </TrackBase>
-    )
-}
-
-const TrackNoEdit = ({ edit, children }) => {
-    const words = children.split(' ')
-    return (
-      <TrackBase>
-          {words.map(word => {
-            return <div style={{display: 'block', marginLeft: '7px'}}>{word}</div>
-          })}
-      </TrackBase>
-    )
-}
-
-const Track = ({ edit, children }) => {
-    return edit 
-      ? <TrackEdit children={children} /> 
-      : <TrackNoEdit children={children} />
-}
+const MarkableWord = styled(Word)`
+  background: ${props => props.marked ? 'yellow' : 'transparent'};
+  cursor: pointer;
+  user-select: none;
+`
 
 export const ExternalContainer = styled.div`
   box-sizing: border-box;
-  width: 640px;
-  height: 130px;
+  width: 100%;
+  min-height: 100px;
   background: #F8F8F8;
   border-left: 3px solid #DCDCDC;
-  border-top: 3px solid #DCDCDC;
   border-right: 3px solid #DCDCDC;
+  padding: 20px 0px 20px 0px;
   ${props => !props.edit && css`
     border-bottom: 3px solid #DCDCDC;
   `}
@@ -79,19 +45,18 @@ export const ExternalContainer = styled.div`
 
 const slidein = keyframes`
     from {
-      top: 0;
+      bottom: 0;
     }
   
     to {
-      top: 60px;
+      bottom: -70px;
     }
 `
 
 export const Actions = styled.div`
   box-sizing: border-box;
-  width: 640px;
+  width: 100%;
   height: 130px;
-  background: #FFF;
   border-radius: 5px;
   background: #F8F8F8;
   border: 3px solid #DCDCDC;
@@ -100,7 +65,7 @@ export const Actions = styled.div`
   text-align: center;
   padding: 20px;
   position: absolute;
-  top: 60px;
+  bottom: -70px;
   z-index: -1;
   ${props => {
       if (props.edit) {
@@ -126,18 +91,61 @@ const RelativeBox = styled.div`
   position: relative;
 `
 
-export const SubtitleControl = ({ edit }) => {
+const TrackEditor = ({ children, markedWord, changeWord }) => {
+    const words = children.split(' ')
+    return (
+      <TrackStyle>
+          {words.map((word, index) => {
+            return <MarkableWord key={index} marked={index === markedWord} onClick={() => changeWord(index)}>{word}</MarkableWord>
+          })}
+      </TrackStyle>
+    )
+}
+
+const TrackViewer = ({ children }) => {
+    const words = children.split(' ')
+    return (
+      <TrackStyle>
+          {words.map((word, index) => {
+            return <Word key={index} >{word}</Word>
+          })}
+      </TrackStyle>
+    )
+}
+
+const Track = ({ edit, children, markedWord, changeWord }) => {
+    return edit 
+      ? <TrackEditor children={children} markedWord={markedWord} changeWord={changeWord} /> 
+      : <TrackViewer children={children} />
+}
+
+export const SubtitleControl = ({ edit, subtitle, onCancel, onSave }) => {
+    const [word, setWord] = useState(-1)
+
     return (
         <RelativeBox>
-            <ExternalContainer edit={edit}>
-                <Track edit={edit}>
-                    Bruno Mendes. Igor Almeida.
+            <ExternalContainer edit={edit} >
+                <Track edit={edit} markedWord={word} changeWord={(index) => setWord(index)}  >
+                    {subtitle}
                 </Track>
             </ExternalContainer>
             <Actions edit={edit} >
                 <ActionFooter>
-                    <Button theme="danger">Cancelar</Button>
-                    <Button theme="success">Salvar</Button>
+                    <Button 
+                      theme="danger" 
+                      onClick={() => {
+                        setWord(-1)
+                        onCancel()
+                      }}>
+                        Cancelar
+                    </Button>
+                    <Button 
+                      theme="success" 
+                      onClick={() => {
+                        onSave(word, subtitle)
+                      }}>
+                        Salvar
+                    </Button>
                 </ActionFooter>
             </Actions>
         </RelativeBox>
