@@ -49,7 +49,7 @@ const slidein = keyframes`
     }
   
     to {
-      bottom: -70px;
+      bottom: -80px;
     }
 `
 
@@ -65,7 +65,7 @@ export const Actions = styled.div`
   text-align: center;
   padding: 20px;
   position: absolute;
-  bottom: -70px;
+  bottom: -80px;
   z-index: -1;
   ${props => {
       if (props.edit) {
@@ -119,11 +119,11 @@ const Track = ({ edit, children, markedWord, changeWord }) => {
       : <TrackViewer children={children} />
 }
 
-export const SubtitleControl = ({ edit, subtitle, onCancel, onSave }) => {
+export const SubtitleControl = ({ edit, subtitle, onCancel, onSave, onClick }) => {
     const [word, setWord] = useState(-1)
 
     return (
-        <RelativeBox>
+        <RelativeBox onClick={onClick}>
             <ExternalContainer edit={edit} >
                 <Track edit={edit} markedWord={word} changeWord={(index) => setWord(index)}  >
                     {subtitle}
@@ -133,7 +133,8 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave }) => {
                 <ActionFooter>
                     <Button 
                       theme="danger" 
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setWord(-1)
                         onCancel()
                       }}>
@@ -141,7 +142,8 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave }) => {
                     </Button>
                     <Button 
                       theme="success" 
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         onSave(word, subtitle)
                       }}>
                         Salvar
