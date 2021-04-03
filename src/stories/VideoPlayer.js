@@ -55,11 +55,18 @@ export default class VideoPlayer extends React.Component {
         <SubtitleControl 
             subtitle="allowing oxygen from the air we breathe into the bloodstream"
             edit={this.state.edit}
-            onClick={() => this.setState({ edit: true })}
-            onCancel={() => this.setState({ edit: false })}
+            onClick={() =>{
+              this.player.pause()
+              this.setState({ edit: true })
+            }}
+            onCancel={() => {
+              this.player.play()
+              this.setState({ edit: false })
+            }}
             onSave={(word, subtitle) => {
                 alert(word)
                 this.setState({ edit: false })
+                this.player.play()
             }}
         />
       </Center>

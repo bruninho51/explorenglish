@@ -34,9 +34,10 @@ export const ExternalContainer = styled.div`
   border-left: 3px solid #DCDCDC;
   border-right: 3px solid #DCDCDC;
   padding: 20px 0px 20px 0px;
-  ${props => !props.edit && css`
+  /*${props => !props.edit && css`
     border-bottom: 3px solid #DCDCDC;
-  `}
+  `}*/
+  border-bottom: 3px solid #DCDCDC;
   border-radius: 5px;
   display: flex;
   justify-content: center;
