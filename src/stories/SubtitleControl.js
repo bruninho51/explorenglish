@@ -92,8 +92,12 @@ const RelativeBox = styled.div`
   position: relative;
 `
 
+const extractWordsFromSentence = (sentence) => {
+  return sentence.split(' ').map(word => word.trim()).filter(word => !!word)
+}
+
 const TrackEditor = ({ children, markedWord, changeWord }) => {
-    const words = children.split(' ')
+    const words = extractWordsFromSentence(children)
     return (
       <TrackStyle>
           {words.map((word, index) => {
@@ -104,7 +108,7 @@ const TrackEditor = ({ children, markedWord, changeWord }) => {
 }
 
 const TrackViewer = ({ children }) => {
-    const words = children.split(' ')
+    const words = extractWordsFromSentence(children)
     return (
       <TrackStyle>
           {words.map((word, index) => {
@@ -135,7 +139,7 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave, onClick }) =
                     <Button 
                       theme="danger" 
                       onClick={(e) => {
-                        e.stopPropagation();
+                        e.stopPropagation()
                         setWord(-1)
                         onCancel()
                       }}>
@@ -144,8 +148,9 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave, onClick }) =
                     <Button 
                       theme="success" 
                       onClick={(e) => {
-                        e.stopPropagation();
+                        e.stopPropagation()
                         onSave(word, subtitle)
+                        setWord(-1)
                       }}>
                         Salvar
                     </Button>

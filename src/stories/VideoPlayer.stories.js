@@ -13,6 +13,8 @@ const videoJsOptions = {
     sources: [{
       src: 'pneumonia.mp4'
     }],
+    balance: 500,
+    onSave: (word, subtitle) => alert(word),
     subtitle: [
       {
         "identifier": "1",

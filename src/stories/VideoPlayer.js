@@ -33,38 +33,60 @@ export default class VideoPlayer extends React.Component {
     }
   }
 
+  nextSubtitle() {
+    const $this = this
+    const index = $this.state.subtitleIndex + 1
+    $this.setState({
+      ...$this.state,
+      subtitle: $this.props.subtitle[index],
+      subtitleIndex: index
+    })
+  }
+
+  showSubtitle() {
+    const $this = this
+    $this.setState({
+      ...$this.state,
+      showSubtitle: true
+    })
+  }
+
+  searchSubtitle(currentTime) {
+    const $this = this
+    const timestamp = currentTime.getTime()
+    const subtitle = $this.props.subtitle.find(subtitle => {
+      const start = (new Date(subtitle.start)).getTime() - this.props.balance
+      const end = (new Date(subtitle.end)).getTime() - this.props.balance
+      return timestamp >= start && timestamp < end
+    })
+    $this.setState({
+      ...$this.state,
+      showSubtitle: true,
+      subtitle: subtitle,
+      subtitleIndex: subtitle.identifier - 1
+    })
+  }
+
   componentDidMount() {
-    this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
-      console.log('onPlayerReady', this)
+    const $this = this
+
+    $this.player = videojs($this.videoNode, $this.props);
+
+    $this.player.on("timeupdate", function(){
+      const currentTime = new Date()
+      currentTime.setHours(0, 0, 0, 0, 0)
+      currentTime.setSeconds(this.currentTime())
+      $this.searchSubtitle(currentTime)
     });
 
-    const $this = this
-    this.player.on(
-      "timeupdate", 
-      function(event){
-
-        const current = new Date()
-        current.setHours(0, 0, 0, 0, 0)
-        current.setSeconds(this.currentTime())
-
-        const start = new Date($this.state.subtitle.start)
-        const end = new Date($this.state.subtitle.end)
-
-        if (current > start && current < end) {
-          $this.setState({
-            ...$this.state,
-            showSubtitle: true
-          })
-        } else if (current > end) {
-          $this.setState({
-            ...$this.state,
-            showSubtitle: false,
-            subtitle: $this.props.subtitle[$this.state.subtitleIndex + 1],
-            subtitleIndex: $this.state.subtitleIndex + 1
-          })
-        }
-
-      });
+    $this.player.on("seeking", function() {
+      $this.setState({
+        ...$this.state,
+        showSubtitle: false,
+        subtitle: null,
+        subtitleIndex: null
+      })
+    })
   }
 
   componentWillUnmount() {
@@ -95,9 +117,9 @@ export default class VideoPlayer extends React.Component {
               this.setState({ edit: false })
             }}
             onSave={(word, subtitle) => {
-                alert(word)
-                this.setState({ edit: false })
-                this.player.play()
+              this.props.onSave(word, subtitle)
+              this.setState({ edit: false })
+              this.player.play()
             }}
         />
       </Center>
