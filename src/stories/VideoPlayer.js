@@ -26,7 +26,10 @@ export default class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      edit: false
+      edit: false,
+      subtitle: this.props.subtitle[0],
+      subtitleIndex: 0,
+      showSubtitle: false
     }
   }
 
@@ -34,6 +37,34 @@ export default class VideoPlayer extends React.Component {
     this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
       console.log('onPlayerReady', this)
     });
+
+    const $this = this
+    this.player.on(
+      "timeupdate", 
+      function(event){
+
+        const current = new Date()
+        current.setHours(0, 0, 0, 0, 0)
+        current.setSeconds(this.currentTime())
+
+        const start = new Date($this.state.subtitle.start)
+        const end = new Date($this.state.subtitle.end)
+
+        if (current > start && current < end) {
+          $this.setState({
+            ...$this.state,
+            showSubtitle: true
+          })
+        } else if (current > end) {
+          $this.setState({
+            ...$this.state,
+            showSubtitle: false,
+            subtitle: $this.props.subtitle[$this.state.subtitleIndex + 1],
+            subtitleIndex: $this.state.subtitleIndex + 1
+          })
+        }
+
+      });
   }
 
   componentWillUnmount() {
@@ -53,7 +84,7 @@ export default class VideoPlayer extends React.Component {
           />
         </div>
         <SubtitleControl 
-            subtitle="allowing oxygen from the air we breathe into the bloodstream"
+            subtitle={this.state.showSubtitle ? this.state.subtitle.subtitle : ''}
             edit={this.state.edit}
             onClick={() =>{
               this.player.pause()
