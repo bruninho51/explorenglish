@@ -1,10 +1,10 @@
-import { VideoPlayer } from "./VideoPlayer";
+import { PhrasalExtractor } from "./PhrasalExtractor";
 
 const configuration = {
-    title: 'Example/VideoPlayer',
-    component: VideoPlayer
-  };
-  
+  title: 'Example/PhrasalExtractor',
+  component: PhrasalExtractor
+};
+
 export default configuration
 
 const videoJsOptions = {
@@ -14,7 +14,6 @@ const videoJsOptions = {
       src: 'pneumonia.mp4'
     }],
     balance: 500,
-    onSave: (word, subtitle) => alert(word),
     subtitle: [
       {
         "identifier": "1",
@@ -1626,14 +1625,10 @@ const videoJsOptions = {
       }
     ]
   }
-  
-const Template = (args) => {
-  return (
-    <div style={{width: '800px', height: '100px'}}>
-      <VideoPlayer {...args} />
-    </div>
-  )
-}
 
-export const Video = Template.bind({})
-Video.args = videoJsOptions
+const Template = (args) => <PhrasalExtractor {...args} />
+
+export const Extractor = Template.bind({})
+Extractor.args = {
+    videoPlayer: videoJsOptions
+}

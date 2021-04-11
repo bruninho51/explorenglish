@@ -7,7 +7,7 @@ import '@videojs/themes/dist/sea/index.css';
 
 export const Center = styled.p`
   box-sizing: border-box;
-  width: 90%;
+  width: 100%;
   min-height: 100px;
   background: #FFF;
   border-radius: 5px;
@@ -59,12 +59,14 @@ export default class VideoPlayer extends React.Component {
       const end = (new Date(subtitle.end)).getTime() - this.props.balance
       return timestamp >= start && timestamp < end
     })
-    $this.setState({
-      ...$this.state,
-      showSubtitle: true,
-      subtitle: subtitle,
-      subtitleIndex: subtitle.identifier - 1
-    })
+    if (subtitle) {
+      $this.setState({
+        ...$this.state,
+        showSubtitle: true,
+        subtitle: subtitle,
+        subtitleIndex: subtitle.identifier - 1
+      })
+    }
   }
 
   componentDidMount() {
