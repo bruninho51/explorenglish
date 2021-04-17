@@ -34,9 +34,6 @@ export const ExternalContainer = styled.div`
   border-left: 3px solid #DCDCDC;
   border-right: 3px solid #DCDCDC;
   padding: 20px 0px 20px 0px;
-  /*${props => !props.edit && css`
-    border-bottom: 3px solid #DCDCDC;
-  `}*/
   border-bottom: 3px solid #DCDCDC;
   border-radius: 5px;
   display: flex;
@@ -143,7 +140,7 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave, onClick }) =
                         setWord(-1)
                         onCancel()
                       }}>
-                        Cancelar
+                        Cancel
                     </Button>
                     <Button 
                       theme="success" 
@@ -152,7 +149,7 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave, onClick }) =
                         onSave(word, subtitle)
                         setWord(-1)
                       }}>
-                        Salvar
+                        Save
                     </Button>
                 </ActionFooter>
             </Actions>

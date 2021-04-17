@@ -9,10 +9,13 @@
     "@videojs/themes": "^1.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-draggable": "^4.4.3",
+    "react-icons": "^4.2.0",
     "react-scripts": "4.0.3",
     "react-video-js-player": "^1.1.1",
     "styled-components": "^5.2.3",
-    "video.js": "^7.11.4",
+    "uuid": "^8.3.2",
+    "video.js": "^7.12.1",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

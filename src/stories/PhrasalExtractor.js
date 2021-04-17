@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import VideoPlayer from "../VideoPlayer"
+import VideoPlayer from "./VideoPlayer"
+import { v4 as uuidv4 } from 'uuid';
+import { PhrasalList } from "./PhrasalList";
 
 export const Container = styled.div`
   box-sizing: border-box;
@@ -97,19 +99,21 @@ export const PhrasalExtractor = (props) => {
 
     return (
         <Container>
-            <PhrasalListContainer>
-                {phrases.map(phrase => <Card wordIndex={phrase.wordIndex} sentence={phrase.sentence} />)}
-            </PhrasalListContainer>
+           <PhrasalList phrases={phrases} onDelete={(uuid) => {
+             if (window.confirm('Are you sure want to delete?')) {
+              setPhrases(phrases.filter(phrase => phrase.uuid !== uuid))
+             }
+           }} />
             <VideoContainer>
                 <VideoPlayer 
                     {...props.videoPlayer } 
                     onSave={(word, subtitle) => {
                         const newWord = {
+                            uuid: uuidv4(),
                             wordIndex: word,
                             sentence: subtitle,
                             word: extractWordsFromSentence(subtitle)[word]
                         }
-                        console.log(newWord)
                         setPhrases([...phrases, newWord])
                         if (props.videoPlayer.onSave) 
                             props.videoPlayer.onSave(word, subtitle)
