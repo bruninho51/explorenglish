@@ -8,8 +8,6 @@ const configuration = {
 export default configuration
 
 const videoJsOptions = {
-    autoplay: true,
-    controls: true,
     sources: [{
       src: 'pneumonia.mp4'
     }],

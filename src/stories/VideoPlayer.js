@@ -72,7 +72,11 @@ export default class VideoPlayer extends React.Component {
   componentDidMount() {
     const $this = this
 
-    $this.player = videojs($this.videoNode, $this.props);
+    $this.player = videojs($this.videoNode, {
+      autoplay: true,
+      controls: true, 
+      sources: $this.props.sources 
+    });
 
     $this.player.on("timeupdate", function(){
       const currentTime = new Date()

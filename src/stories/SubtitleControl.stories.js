@@ -21,7 +21,7 @@ NoEditable.args = {
 export const Editable = Template.bind({})
 Editable.args = {
   edit: true,
-  subtitle: 'through a series of channels called bronchi, through a series of channels called bronchi, through a series of channels called bronchi, through a series of channels called bronchi, through a series of channels called bronchi, through a series of channels called bronchi,',
+  subtitle: 'Every time you breathe in, air travels down the trachea,',
   onCancel: () => { alert('should set edit equal false') },
   onSave: (word, subtitle) => { alert(`word: ${word}\n subtitle: ${subtitle}`) }
 }

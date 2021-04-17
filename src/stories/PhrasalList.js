@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React from "react"
 import styled from "styled-components"
 import { IoIosClose } from 'react-icons/io'
 import { RiEmotionSadLine } from 'react-icons/ri'
@@ -94,15 +94,36 @@ const PhrasalListContainerNoContent = styled(PhrasalListContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  user-select: none;
 `
+
+const DesertIcon = () => (
+  <img 
+      alt="empty" 
+      src="desert.png" 
+      style={{width: '100px'}}
+    />
+)
+
+const PhrasalListMessage = ({ children }) => (
+  <span 
+    style={{
+      fontSize: '24px', 
+      fontFamily: 'Arial', 
+      paddingBottom: '20px'
+    }}>
+      {children}
+  </span>
+)
 
 const NoContent = () => {
   return (
     <PhrasalListContainerNoContent>
-      <div style={{fontSize: '32px', position: 'absolute'}}>
-        <RiEmotionSadLine /> 
-        <span>There's nothing here</span>
-      </div>
+        <DesertIcon />
+        <PhrasalListMessage>
+          There's no content here!
+        </PhrasalListMessage>
     </PhrasalListContainerNoContent>
   )
 }
