@@ -144,7 +144,7 @@ export const SubtitleControl = ({ edit, subtitle, onCancel, onSave, onClick }) =
                       }}>
                         Cancel
                     </Button>
-                    <Button 
+                    <Button disabled={word < 0}
                       theme="success" 
                       onClick={(e) => {
                         e.stopPropagation()

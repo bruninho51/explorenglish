@@ -13,7 +13,7 @@ const theme = {
   light: ['#Dbdde0', '#000', '#E7e7e8']
 }
 
-const BaseButton = styled.a`
+const BaseButton = styled.button`
   user-select: none;
   position: relative;
   font-family: Roboto, sans-serif;
@@ -32,12 +32,15 @@ const BaseButton = styled.a`
   border-image: initial;
   border-radius: 5px;
   outline: none;
-  cursor: pointer;
-  background-color: ${props => theme[props.theme][0]};
-  color: ${props => theme[props.theme][1]};
-  &:hover {
-    background: ${props => theme[props.theme][2]};
-  }
+  background-color: #E0E0E0;
+  ${props => !props.disabled && css`
+    cursor: pointer;
+    background-color: ${props => theme[props.theme][0]};
+    color: ${props => theme[props.theme][1]};
+    &:hover {
+      background: ${props => theme[props.theme][2]};
+    }
+  `}
 `
 
 const SizedButton = styled(BaseButton)`
