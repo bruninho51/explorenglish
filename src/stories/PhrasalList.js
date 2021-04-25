@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { IoIosClose } from 'react-icons/io'
-import { RiEmotionSadLine } from 'react-icons/ri'
+import Scrollbars from "react-custom-scrollbars"
 
 const Section = styled.section`
   box-sizing: border-box;
@@ -20,8 +20,7 @@ const PhrasalListContainer = styled(Section)`
   width: 40%;
   display: block;
   height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
 `
 
 export const CardStyle = styled.div`
@@ -45,7 +44,7 @@ export const DeleteButton = styled.div`
     border: 1px solid #000;
     &:hover {
       background: #E44352;
-    //background: rgba(220, 53, 69, 1);
+      background: rgba(220, 53, 69, 1);
   }
     position: absolute;
     top: 5px;
@@ -58,6 +57,7 @@ export const DeleteButton = styled.div`
 
 const RelativeBox = styled.div`
   position: relative;
+  margin: 2px 5px 2px 5px;
 `
 
 export const Card = ({ wordIndex, sentence, uuid, onDelete }) => {
@@ -128,10 +128,18 @@ const NoContent = () => {
   )
 }
 
+const VerticalScroll = styled.div`
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  width: 6px;
+`
+
 export const PhrasalList = ({ phrases, onDelete }) => {
     return (
       phrases && phrases.length ?
+      
         <PhrasalListContainer>
+          <Scrollbars renderThumbVertical={() => (<VerticalScroll />)}>
           {phrases.map((phrase) => (
               <Card 
                   key={phrase.uuid} 
@@ -141,5 +149,6 @@ export const PhrasalList = ({ phrases, onDelete }) => {
                   onDelete={onDelete}
               />
           ))}
+          </Scrollbars>
         </PhrasalListContainer>  : <NoContent />)
 }
