@@ -3,6 +3,7 @@ import styled from "styled-components"
 import VideoPlayer from "./VideoPlayer"
 import { v4 as uuidv4 } from 'uuid';
 import { PhrasalList } from "./PhrasalList";
+import { Button } from "./Button";
 
 export const Container = styled.div`
   box-sizing: border-box;
@@ -63,7 +64,9 @@ const Word = styled.span`
 `
 
 const MarkableWord = styled(Word)`
-  background: ${props => props.marked ? 'yellow' : 'transparent'};
+  padding: 1px;
+  border-radius: 5px;
+  background: ${props => props.marked ? '#FFDE03' : 'transparent'};
 `
 
 export const Card = ({ wordIndex, sentence }) => {
@@ -82,6 +85,7 @@ const VideoContainer = styled(Section)`
   width: 59%;
   height: 80vmin;
   flex-direction: column;
+  justify-content: space-around;
   z-index: 1;
   background: transparent;
   border: 0px;
@@ -92,6 +96,14 @@ const SizedBox = styled.div`
   width: 100%;
   z-index: -2;
 `
+
+export const OptBar = ({ children }) => {
+  return (
+    <div style={{position: 'absolute', bottom: '40px', right: '40px'}}>
+      { children }
+    </div>
+  )
+}
 
 export const PhrasalExtractor = (props) => {
 
@@ -120,6 +132,11 @@ export const PhrasalExtractor = (props) => {
                     }}
                 />
                 <SizedBox height="120px" />
+                <OptBar>
+                  <Button size="large" style={{width: '200px'}}>
+                    Finish Studies 
+                  </Button>
+                </OptBar>
             </VideoContainer>
         </Container>
     )

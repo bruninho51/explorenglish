@@ -42,9 +42,10 @@ export const DeleteButton = styled.div`
     height: 32px;
     font-size: 24px;
     border-radius: 200px;
-    background-color: rgba(128,128,128,0.4);
+    border: 1px solid #000;
     &:hover {
-    background: rgba(128,128,128,0.5);
+      background: #E44352;
+    //background: rgba(220, 53, 69, 1);
   }
     position: absolute;
     top: 5px;
@@ -87,7 +88,9 @@ const Word = styled.span`
 `
 
 const MarkableWord = styled(Word)`
-  background: ${props => props.marked ? 'yellow' : 'transparent'};
+  padding: 1px;
+  border-radius: 5px;
+  background: ${props => props.marked ? '#FFDE03' : 'transparent'};
 `
 
 const PhrasalListContainerNoContent = styled(PhrasalListContainer)`
@@ -98,11 +101,11 @@ const PhrasalListContainerNoContent = styled(PhrasalListContainer)`
   user-select: none;
 `
 
-const DesertIcon = () => (
+const EmptyListIcon = () => (
   <img 
       alt="empty" 
-      src="desert.png" 
-      style={{width: '100px'}}
+      src="noting.png" 
+      style={{width: '200px'}}
     />
 )
 
@@ -120,10 +123,7 @@ const PhrasalListMessage = ({ children }) => (
 const NoContent = () => {
   return (
     <PhrasalListContainerNoContent>
-        <DesertIcon />
-        <PhrasalListMessage>
-          There's no content here!
-        </PhrasalListMessage>
+        <EmptyListIcon />
     </PhrasalListContainerNoContent>
   )
 }

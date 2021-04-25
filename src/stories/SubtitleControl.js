@@ -4,7 +4,7 @@ import { Button } from "./Button";
 
 export const TrackStyle = styled.p`
   box-sizing: border-box;
-  width: 90%;
+  width: 99%;
   min-height: 100px;
   background: #FFF;
   border-radius: 5px;
@@ -21,7 +21,9 @@ const Word = styled.span`
 `
 
 const MarkableWord = styled(Word)`
-  background: ${props => props.marked ? 'yellow' : 'transparent'};
+  padding: 1px;
+  border-radius: 5px;
+  background: ${props => props.marked ? '#FFDE03' : 'transparent'};
   cursor: pointer;
   user-select: none;
 `
@@ -33,7 +35,7 @@ export const ExternalContainer = styled.div`
   background: #F8F8F8;
   border-left: 3px solid #DCDCDC;
   border-right: 3px solid #DCDCDC;
-  padding: 20px 0px 20px 0px;
+  padding: 20px 2% 20px 2%;
   border-bottom: 3px solid #DCDCDC;
   border-radius: 5px;
   display: flex;
