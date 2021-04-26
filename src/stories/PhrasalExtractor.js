@@ -4,6 +4,7 @@ import VideoPlayer from "./VideoPlayer"
 import { v4 as uuidv4 } from 'uuid';
 import { PhrasalList } from "./PhrasalList";
 import { Button } from "./Button";
+import { Dialog } from "./Dialog";
 
 export const Container = styled.div`
   box-sizing: border-box;
@@ -108,13 +109,35 @@ export const OptBar = ({ children }) => {
 export const PhrasalExtractor = (props) => {
 
     const [phrases, setPhrases] = useState([])
+    const [dialog, setDialog] = useState(null)
 
     return (
-        <Container>
+        <React.Fragment>
+          {dialog ? <Dialog 
+            title={dialog.title}
+            labelBtn1={dialog.labelBtn1}
+            labelBtn2={dialog.labelBtn2}
+            onClickBtn1={dialog.onClickBtn1} 
+            onClickBtn2={dialog.onClickBtn2} >
+              {dialog.body}
+            </Dialog> : <div />}
+          
+          <Container>
            <PhrasalList phrases={phrases} onDelete={(uuid) => {
-             if (window.confirm('Are you sure want to delete?')) {
-              setPhrases(phrases.filter(phrase => phrase.uuid !== uuid))
-             }
+
+            setDialog({
+              title: 'Atention',
+              body: 'Are you sure want to delete?',
+              labelBtn1: 'Yes',
+              labelBtn2: 'No',
+              onClickBtn1: () => {
+                setPhrases(phrases.filter(phrase => phrase.uuid !== uuid))
+                setDialog(null)
+              },
+              onClickBtn2: () => {
+                setDialog(null)
+              }
+            })
            }} />
             <VideoContainer>
                 <VideoPlayer 
@@ -139,5 +162,6 @@ export const PhrasalExtractor = (props) => {
                 </OptBar>
             </VideoContainer>
         </Container>
+        </React.Fragment>
     )
 }

@@ -109,17 +109,6 @@ const EmptyListIcon = () => (
     />
 )
 
-const PhrasalListMessage = ({ children }) => (
-  <span 
-    style={{
-      fontSize: '24px', 
-      fontFamily: 'Arial', 
-      paddingBottom: '20px'
-    }}>
-      {children}
-  </span>
-)
-
 const NoContent = () => {
   return (
     <PhrasalListContainerNoContent>
