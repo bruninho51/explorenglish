@@ -9,7 +9,11 @@ const configuration = {
 
 export default configuration
 
-const Template = (args) => <PhrasalList {...args} />
+const Template = (args) => (
+    <div style={{height: '500px', width: '1200px'}}>
+        <PhrasalList {...args} />
+    </div>
+)
 
 export const Content = Template.bind({})
 Content.args = {

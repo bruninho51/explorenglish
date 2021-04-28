@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { PhrasalList } from "./PhrasalList";
 import { Button } from "./Button";
 import { Dialog } from "./Dialog";
+import { extractWordsFromSentence } from "../helpers";
 
 export const Container = styled.div`
   box-sizing: border-box;
@@ -33,55 +34,6 @@ const Section = styled.section`
   display: flex;
 `
 
-const PhrasalListContainer = styled(Section)`
-  width: 40%;
-  display: block;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-`
-
-export const CardStyle = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 100px;
-  background: #FFF;
-  border-radius: 5px;
-  box-shadow: 0px 5px 15px 0px;
-  padding: 5px;
-  font: 24px Roboto, sans-serif;
-  text-align: center;
-  margin: 5px 0px 5px 0px;
-`
-
-const extractWordsFromSentence = (sentence) => {
-    return sentence.split(' ').map(word => word.trim()).filter(word => !!word)
-}
-
-
-const Word = styled.span`
-  display: inline-block;
-  margin-left: 7px;
-`
-
-const MarkableWord = styled(Word)`
-  padding: 1px;
-  border-radius: 5px;
-  background: ${props => props.marked ? '#FFDE03' : 'transparent'};
-`
-
-export const Card = ({ wordIndex, sentence }) => {
-    const words = extractWordsFromSentence(sentence)
-    return (
-      <CardStyle>
-          {words.map((word, index) => {
-            return <MarkableWord key={index} marked={index === wordIndex} >{word}</MarkableWord>
-          })}
-      </CardStyle>
-    )
-    
-}
-
 const VideoContainer = styled(Section)`
   width: 59%;
   height: 80vmin;
@@ -108,8 +60,30 @@ export const OptBar = ({ children }) => {
 
 export const PhrasalExtractor = (props) => {
 
-    const [phrases, setPhrases] = useState([])
-    const [dialog, setDialog] = useState(null)
+  const [phrases, setPhrases] = useState([])
+  const [dialog, setDialog] = useState(null)
+
+    const saveSentences = (callback) => {
+      const status = (index) => ({
+        failed: () => {
+          const newPhrases = [ ...phrases ]
+          newPhrases[index].status = 'failed'
+          setPhrases(newPhrases)
+        },
+        saved: () => {
+          const newPhrases = [ ...phrases ]
+          newPhrases[index].status = 'saved'
+          setPhrases(newPhrases)
+        }
+      })
+
+      for (let i = 0; i < phrases.length; i++) {
+        const newPhrases = [ ...phrases ]
+        newPhrases[i].status = 'saving'
+        setPhrases(newPhrases)
+        callback(phrases[i], status(i))
+      }
+    }
 
     return (
         <React.Fragment>
@@ -147,7 +121,7 @@ export const PhrasalExtractor = (props) => {
                             uuid: uuidv4(),
                             wordIndex: word,
                             sentence: subtitle,
-                            word: extractWordsFromSentence(subtitle)[word]
+                            word: extractWordsFromSentence(subtitle)[word],
                         }
                         setPhrases([...phrases, newWord])
                         if (props.videoPlayer.onSave) 
@@ -156,8 +130,8 @@ export const PhrasalExtractor = (props) => {
                 />
                 <SizedBox height="120px" />
                 <OptBar>
-                  <Button size="large" style={{width: '200px'}}>
-                    Finish Studies 
+                  <Button size="large" style={{width: '200px'}} onClick={() => saveSentences(props.save)}>
+                    Finish Studies
                   </Button>
                 </OptBar>
             </VideoContainer>

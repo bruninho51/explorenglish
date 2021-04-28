@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { IoIosClose } from 'react-icons/io'
 import Scrollbars from "react-custom-scrollbars"
+import { Card } from "./Card"
 
 const Section = styled.section`
   box-sizing: border-box;
@@ -21,76 +21,6 @@ const PhrasalListContainer = styled(Section)`
   display: block;
   height: 100%;
   overflow: hidden;
-`
-
-export const CardStyle = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 100px;
-  background: #FFF;
-  border-radius: 5px;
-  box-shadow: 0px 5px 15px 0px;
-  padding: 5px 50px 5px 10px;
-  font: 24px Roboto, sans-serif;
-  text-align: center;
-  margin: 5px 0px 5px 0px;
-`
-
-export const DeleteButton = styled.div`
-    width: 32px;
-    height: 32px;
-    font-size: 24px;
-    border-radius: 200px;
-    border: 1px solid #000;
-    &:hover {
-      background: #E44352;
-      background: rgba(220, 53, 69, 1);
-  }
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-`
-
-const RelativeBox = styled.div`
-  position: relative;
-  margin: 2px 5px 2px 5px;
-`
-
-export const Card = ({ wordIndex, sentence, uuid, onDelete }) => {
-    const words = extractWordsFromSentence(sentence)
-    return (
-        <RelativeBox>
-            <CardStyle>
-                {words.map((word, index) => {
-                    return <MarkableWord key={index} marked={index === wordIndex} >{word}</MarkableWord>
-                })}
-            </CardStyle>
-            <DeleteButton onClick={() => { onDelete(uuid) }}>
-                <IoIosClose />
-            </DeleteButton>
-      </RelativeBox>
-    )
-    
-}
-
-const extractWordsFromSentence = (sentence) => {
-    return sentence.split(' ').map(word => word.trim()).filter(word => !!word)
-}
-
-
-const Word = styled.span`
-  display: inline-block;
-  margin-left: 7px;
-`
-
-const MarkableWord = styled(Word)`
-  padding: 1px;
-  border-radius: 5px;
-  background: ${props => props.marked ? '#FFDE03' : 'transparent'};
 `
 
 const PhrasalListContainerNoContent = styled(PhrasalListContainer)`
@@ -136,6 +66,7 @@ export const PhrasalList = ({ phrases, onDelete }) => {
                   wordIndex={phrase.wordIndex} 
                   sentence={phrase.sentence} 
                   onDelete={onDelete}
+                  status={phrase.status}
               />
           ))}
           </Scrollbars>

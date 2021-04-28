@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
+import { extractWordsFromSentence } from "../helpers";
 import { Button } from "./Button";
 
 export const TrackStyle = styled.p`
@@ -90,10 +91,6 @@ const ActionFooter = styled.footer`
 const RelativeBox = styled.div`
   position: relative;
 `
-
-const extractWordsFromSentence = (sentence) => {
-  return sentence.split(' ').map(word => word.trim()).filter(word => !!word)
-}
 
 const TrackEditor = ({ children, markedWord, changeWord }) => {
     const words = extractWordsFromSentence(children)
