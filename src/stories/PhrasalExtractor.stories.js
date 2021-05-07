@@ -1,4 +1,4 @@
-import { PhrasalExtractor } from "./PhrasalExtractor";
+import { PhrasalExtractor } from "../widgets/PhrasalExtractor";
 
 
 const configuration = {

@@ -1,4 +1,4 @@
-import { VideoPlayer } from "./VideoPlayer";
+import { VideoPlayer } from "../widgets/VideoPlayer";
 
 const configuration = {
     title: 'Example/VideoPlayer',

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { PhrasalList } from "./PhrasalList";
 import { Button } from "./Button";
 import { Dialog } from "./Dialog";
-import { extractWordsFromSentence } from "../helpers";
+import { extractWordsFromSentence } from "../helpers/helpers";
 
 export const Container = styled.div`
   box-sizing: border-box;

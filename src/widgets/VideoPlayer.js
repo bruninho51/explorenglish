@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import videojs from 'video.js'
-import { SubtitleControl } from './SubtitleControl'
+import { SubtitleControl } from '../widgets/SubtitleControl'
 import 'video.js/dist/video-js.css'
 import '@videojs/themes/dist/sea/index.css';
 

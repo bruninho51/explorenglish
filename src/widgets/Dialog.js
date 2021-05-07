@@ -1,6 +1,6 @@
 import React from 'react'
-import '../Dialog.css'
-import '../Swing.css'
+import '../css/Dialog.css'
+import '../css/Swing.css'
 
 const DialogContainer = ({ children, onClick }) => {
     return (
@@ -31,8 +31,8 @@ export const Dialog = ({ children, title, labelBtn1, labelBtn2, onClickBtn1, onC
                 </header>
                 <section class="body" id="dialog-body">{children}</section>
                 <footer>
-                    <input type="button" id="dialog-button1" onClick={onClickBtn1} value={labelBtn1} />
-                    <input type="button" id="dialog-button2" onClick={onClickBtn2} value={labelBtn2} />
+                    {labelBtn1 ? <input type="button" id="dialog-button1" onClick={onClickBtn1} value={labelBtn1} /> : <span />}
+                    {labelBtn2 ? <input type="button" id="dialog-button2" onClick={onClickBtn2} value={labelBtn2} /> : <span />}
                 </footer>
             </div>
         </DialogContainer>

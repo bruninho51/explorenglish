@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
-import { extractWordsFromSentence } from "../helpers";
+import { extractWordsFromSentence } from "../helpers/helpers";
 import { Button } from "./Button";
 
 export const TrackStyle = styled.p`

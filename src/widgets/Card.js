@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { IoIosClose } from 'react-icons/io'
 import { ImSpinner } from 'react-icons/im'
-import { extractWordsFromSentence } from "../helpers"
+import { extractWordsFromSentence } from "../helpers/helpers"
 
 export const CardStyle = styled.div`
   box-sizing: border-box;

@@ -1,4 +1,4 @@
-import { SubtitleControl } from "./SubtitleControl";
+import { SubtitleControl } from "../widgets/SubtitleControl";
 
 const configuration = {
   title: 'Example/Subtitle',

@@ -1,4 +1,4 @@
-import { PhrasalList } from "./PhrasalList";
+import { PhrasalList } from "../widgets/PhrasalList";
 import { v4 as uuidv4 } from "uuid";
 
 

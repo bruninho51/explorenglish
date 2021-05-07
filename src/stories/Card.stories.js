@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from './Card';
+import { Card } from '../widgets/Card';
 
 const configuration = {
   title: 'Example/Card',
