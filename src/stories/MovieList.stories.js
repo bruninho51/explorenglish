@@ -13,11 +13,12 @@ const Template = (args) => <MovieList {...args} />
 
 export const Movies = Template.bind({});
 Movies.args = {
+  onHome: () => alert('Home'),
   movies: [{
     title: "As Aventuras de Timtim Arroz com Feijão e Tapioca",
     imageSrc: "https://images-na.ssl-images-amazon.com/images/I/71ydFW-qgQL.jpg",
     imageAlt: "A Cabana",
     onRemove: () => alert('Remover'),
-    onStudy: () => alert('Estudar')
+    onStudy: () => alert('Estudar'),
   }]
 };

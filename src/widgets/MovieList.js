@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Button } from './Button'
 import { CreateMovieDialog } from "./CreateMovieDialog"
 import { Movie } from './Movie'
+import { MenuApp } from './MenuApp'
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -84,16 +85,14 @@ export const MovieTumb = ({ title }) => {
     )
 }
 
-export const MovieList = ({ movies }) => {
+export const MovieList = ({ movies, onHome }) => {
   const [createMovie, setCreateMovie] = useState(false)
 
     return (
       <React.Fragment>
         {createMovie ? <CreateMovieDialog onCancel={() => setCreateMovie(false)} onSave={() => alert('movie criado')} /> : <div />}
         <Container>
-          <Bar>
-              <Button onClick={() => setCreateMovie(true)}>+</Button>
-          </Bar>
+          <MenuApp onHome={onHome} />
           <MoviesList>
               {movies.map((movie) => (
                 <Movie
